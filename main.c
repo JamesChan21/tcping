@@ -19,6 +19,7 @@ void usage(void)
     fprintf(stderr, "-p portnr	portnumber (e.g. 80)\n");
     fprintf(stderr, "-c count	how many times to connect\n");
     fprintf(stderr, "-i interval	delay between each connect\n");
+    fprintf(stderr, "-v ip version	4: ipv4, 6: ipv6\n");
     fprintf(stderr, "-f		flood connect (no delays)\n");
     fprintf(stderr, "-q		quiet, only returncode\n\n");
 }
@@ -40,8 +41,9 @@ int main(int argc, char *argv[])
     struct addrinfo *resolved;
     int errcode;
     int seen_addrnotavail;
+    int aifamily = AF_INET;
 
-    while((c = getopt(argc, argv, "h:p:c:i:fq?")) != -1)
+    while((c = getopt(argc, argv, "h:p:c:i:v:fq?")) != -1)
     {
         switch(c)
         {
@@ -57,6 +59,16 @@ int main(int argc, char *argv[])
                 wait = atoi(optarg);
                 break;
 
+            case 'v':
+                if(!strcmp(optarg, "6") )
+                {
+                    aifamily = AF_INET6;
+                }
+                else if(!strcmp(optarg, "4"))
+                {
+                    aifamily = AF_INET;
+                }
+                break;
             case 'f':
                 wait = 0;
                 break;
@@ -83,7 +95,7 @@ int main(int argc, char *argv[])
     signal(SIGINT, handler);
     signal(SIGTERM, handler);
 
-    if ((errcode = lookup(hostname, portnr, &resolved)) != 0)
+    if ((errcode = lookup(hostname, portnr, aifamily, &resolved)) != 0)
     {
         fprintf(stderr, "%s\n", gai_strerror(errcode));
         return 2;
