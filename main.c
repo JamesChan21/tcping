@@ -15,13 +15,15 @@ static volatile int stop = 0;
 void usage(void)
 {
     fprintf(stderr, "tcping, (C) 2003 folkert@vanheusden.com\n\n");
-    fprintf(stderr, "hostname	hostname (e.g. localhost)\n");
-    fprintf(stderr, "-p portnr	portnumber (e.g. 80)\n");
-    fprintf(stderr, "-c count	how many times to connect\n");
-    fprintf(stderr, "-i interval	delay between each connect\n");
-    fprintf(stderr, "-v ip version	4: ipv4, 6: ipv6\n");
-    fprintf(stderr, "-f		flood connect (no delays)\n");
-    fprintf(stderr, "-q		quiet, only returncode\n\n");
+    fprintf(stderr, "hostname		hostname (e.g. localhost)\n");
+    fprintf(stderr, "-p portnr		portnumber (e.g. 80)\n");
+    fprintf(stderr, "-c count		how many times to connect\n");
+    fprintf(stderr, "-i interval		delay between each connect\n");
+    fprintf(stderr, "-v ip version		4: ipv4, 6: ipv6 (default ipv4)\n");
+    fprintf(stderr, "-t timeout(sec)		timeout (sec) for server response\n");
+    fprintf(stderr, "-u timeout(usec)	timeout (usec) for server response\n");
+    fprintf(stderr, "-f			flood connect (no delays)\n");
+    fprintf(stderr, "-q			quiet, only returncode\n\n");
 }
 
 void handler(int sig)
@@ -33,17 +35,20 @@ int main(int argc, char *argv[])
 {
     char *hostname = NULL;
     char *portnr = "7";
+    char *cptr;
     int c;
     int count = -1, curncount = 0;
     int wait = 1, quiet = 0;
     int ok = 0, err = 0;
     double min = 999999999999999.0, avg = 0.0, max = 0.0;
+    long timeout_sec = 0, timeout_usec = 0;
     struct addrinfo *resolved;
+    struct timeval timeout;
     int errcode;
     int seen_addrnotavail;
     int aifamily = AF_INET;
 
-    while((c = getopt(argc, argv, "h:p:c:i:v:fq?")) != -1)
+    while((c = getopt(argc, argv, "h:p:c:i:v:t:u:fq?")) != -1)
     {
         switch(c)
         {
@@ -61,14 +66,22 @@ int main(int argc, char *argv[])
 
             case 'v':
                 if(!strcmp(optarg, "6") )
-                {
                     aifamily = AF_INET6;
-                }
                 else if(!strcmp(optarg, "4"))
-                {
                     aifamily = AF_INET;
-                }
                 break;
+            case 't':
+                cptr = NULL;
+                timeout_sec = strtol(optarg, &cptr, 10);
+                if (cptr == optarg)
+                    usage();
+                 break;
+            case 'u':
+                cptr = NULL;
+                timeout_usec = strtol(optarg, &cptr, 10);
+                if (cptr == optarg)
+                    usage();
+                 break;
             case 'f':
                 wait = 0;
                 break;
@@ -92,6 +105,9 @@ int main(int argc, char *argv[])
     }
     hostname = argv[optind];
 
+    timeout.tv_sec=timeout_sec + timeout_usec / 1000000;
+    timeout.tv_usec=timeout_usec % 1000000;
+
     signal(SIGINT, handler);
     signal(SIGTERM, handler);
 
@@ -109,7 +125,7 @@ int main(int argc, char *argv[])
         double ms;
         struct timeval rtt;
 
-        if ((errcode = connect_to(resolved, &rtt)) != 0)
+        if ((errcode = connect_to(resolved, &rtt, &timeout)) != 0)
         {
             if (errcode != -EADDRNOTAVAIL)
             {
@@ -141,7 +157,7 @@ int main(int argc, char *argv[])
             max = max < ms ? ms : max;
 
             printf("response from %s:%s, seq=%d time=%.2f ms\n", hostname, portnr, curncount, ms);
-            if (ms > 500) break; /* Stop the test on the first long connect() */
+            // if (ms > 500) break; /* Stop the test on the first long connect() */
         }
 
         curncount++;
@@ -153,7 +169,7 @@ int main(int argc, char *argv[])
     if (!quiet)
     {
         printf("--- %s:%s ping statistics ---\n", hostname, portnr);
-        printf("%d responses, %d ok, %3.2f%% failed\n", curncount, ok, (((double)err) / abs(((double)count)) * 100.0));
+        printf("%d responses, %d ok, %3.2f%% failed\n", curncount, ok, (((double)err) / abs(((double)curncount)) * 100.0));
         printf("round-trip min/avg/max = %.1f/%.1f/%.1f ms\n", min, avg / (double)ok, max);
     }
 
