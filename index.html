@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCPing Visualization</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="languages.js"></script>
+</head>
+<body>
+    <div class="container">
+        <button id="language-switch" class="language-switch">切换到中文</button>
+        <h1 id="title">TCPing Visualization Tool</h1>
+        <div class="description">
+            <p id="description">Test TCP connectivity to a host on a specific port and visualize the results.</p>
+        </div>
+
+        <div class="input-section">
+            <div class="form-group">
+                <label for="hostname" class="tooltip">
+                    <span id="label-hostname">Hostname/IP:</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-hostname">The hostname or IP address to ping (e.g., google.com or 192.168.1.1)</span>
+                </label>
+                <input type="text" id="hostname" placeholder="e.g., google.com or 192.168.1.1">
+            </div>
+            <div class="form-group">
+                <label for="port" class="tooltip">
+                    <span id="label-port">Port (-p):</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-port">The TCP port number to connect to (1-65535)</span>
+                </label>
+                <input type="number" id="port" placeholder="e.g., 80" value="80" min="1" max="65535">
+            </div>
+            <div class="form-group">
+                <label for="count" class="tooltip">
+                    <span id="label-count">Number of pings (-c):</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-count">How many times to connect. Use -1 for unlimited pings</span>
+                </label>
+                <input type="number" id="count" placeholder="e.g., 10" value="10" min="1" max="100">
+            </div>
+            <div class="form-group">
+                <label for="interval" class="tooltip">
+                    <span id="label-interval">Interval in seconds (-i):</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-interval">Delay between each connect in seconds</span>
+                </label>
+                <input type="number" id="interval" placeholder="e.g., 1" value="1" min="0" max="60">
+            </div>
+            <div class="form-group">
+                <label for="ip-version" class="tooltip">
+                    <span id="label-ipVersion">IP Version (-v):</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-ipVersion">IP version to use (IPv4 or IPv6)</span>
+                </label>
+                <select id="ip-version">
+                    <option value="4">IPv4</option>
+                    <option value="6">IPv6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="timeout-sec" class="tooltip">
+                    <span id="label-timeoutSec">Timeout in seconds (-t):</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-timeoutSec">Timeout for server response in seconds</span>
+                </label>
+                <input type="number" id="timeout-sec" placeholder="e.g., 1" value="1" min="0" max="60">
+            </div>
+            <div class="form-group">
+                <label for="timeout-usec" class="tooltip">
+                    <span id="label-timeoutUsec">Timeout in microseconds (-u):</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-timeoutUsec">Timeout for server response in microseconds</span>
+                </label>
+                <input type="number" id="timeout-usec" placeholder="e.g., 0" value="0" min="0" max="999999">
+            </div>
+            <div class="form-group checkbox-group">
+                <label class="tooltip">
+                    <input type="checkbox" id="flood-connect">
+                    <span id="label-floodConnect">Flood connect (-f) (no delays)</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-floodConnect">Send pings as fast as possible without delays</span>
+                </label>
+            </div>
+            <div class="form-group checkbox-group">
+                <label class="tooltip">
+                    <input type="checkbox" id="quiet-mode">
+                    <span id="label-quietMode">Quiet mode (-q) (only return code)</span>
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text" id="tooltip-quietMode">Only show return code, no output</span>
+                </label>
+            </div>
+            <div class="form-group button-group">
+                <button id="start-ping" class="primary-button"><span id="btn-startPing">Start TCPing</span></button>
+                <button id="stop-ping" class="secondary-button" disabled><span id="btn-stopPing">Stop</span></button>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <div class="status-container">
+                <div class="status"><span id="label-status">Status:</span> <span id="status-text">Ready</span></div>
+                <div class="summary" id="summary"></div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="ping-chart"></canvas>
+            </div>
+
+            <div class="log-container">
+                <h3 id="label-pingLog">Ping Log</h3>
+                <div id="ping-log"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
