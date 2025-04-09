@@ -81,6 +81,47 @@ TCPing Visual is a modern web interface for the TCPing utility, allowing you to 
 
 6. To switch language, click the language button in the top-right corner
 
+### 💻 Command Line Usage
+
+TCPing Visual is built on top of the TCPing command line utility. You can also use TCPing directly from the command line:
+
+```bash
+# Basic usage (ping port 80)
+./tcping hostname
+
+# Specify a different port
+./tcping -p 443 hostname
+
+# Ping once
+./tcping -p 443 -c 1 hostname
+
+# Ping 5 times with 2 second interval
+./tcping -p 443 -c 5 -i 2 hostname
+
+# Use IPv6
+./tcping -p 443 -v 6 hostname
+
+# Set timeout (2 seconds)
+./tcping -p 443 -t 2 hostname
+
+# Set timeout with microseconds
+./tcping -p 443 -t 1 -u 500000 hostname
+
+# Flood connect (no delays)
+./tcping -p 443 -f hostname
+
+# Quiet mode (only return code)
+./tcping -p 443 -q hostname
+```
+
+#### Return Codes
+
+TCPing returns the following exit codes:
+
+- `0`: Success - connection established
+- `2`: Host or service could not be resolved
+- `127`: Other errors
+
 ### 🔍 How It Works
 
 1. The web interface sends a request to the Node.js server
@@ -162,6 +203,47 @@ TCPing Visual 是 TCPing 实用程序的现代 Web 界面，允许您通过美�
 5. 点击 "开始 TCPing" 开始测试
 
 6. 要切换语言，请点击右上角的语言按钮
+
+### 💻 命令行使用方法
+
+TCPing Visual 是基于 TCPing 命令行工具构建的。您也可以直接从命令行使用 TCPing：
+
+```bash
+# 基本用法（ping 80端口）
+./tcping 主机名
+
+# 指定不同的端口
+./tcping -p 443 主机名
+
+# 只 ping 一次
+./tcping -p 443 -c 1 主机名
+
+# ping 5次，间隔为2秒
+./tcping -p 443 -c 5 -i 2 主机名
+
+# 使用IPv6
+./tcping -p 443 -v 6 主机名
+
+# 设置超时（2秒）
+./tcping -p 443 -t 2 主机名
+
+# 设置带微秒的超时
+./tcping -p 443 -t 1 -u 500000 主机名
+
+# 洪水连接（无延迟）
+./tcping -p 443 -f 主机名
+
+# 安静模式（只返回代码）
+./tcping -p 443 -q 主机名
+```
+
+#### 返回代码
+
+TCPing 返回以下退出代码：
+
+- `0`：成功 - 连接已建立
+- `2`：无法解析主机或服务
+- `127`：其他错误
 
 ### 🔍 工作原理
 
