@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌐 TCPing Visualization Tool
+# 🌐 TCPing Visual
 
 *A beautiful web interface for TCP connectivity testing*
 
@@ -20,7 +20,7 @@
 
 ## 🇺🇸 English
 
-TCPing Visualization Tool is a modern web interface for the TCPing utility, allowing you to test TCP connectivity to any host and port with a beautiful, interactive visualization.
+TCPing Visual is a modern web interface for the TCPing utility, allowing you to test TCP connectivity to any host and port with a beautiful, interactive visualization.
 
 ### ✨ Features
 
@@ -43,8 +43,8 @@ TCPing Visualization Tool is a modern web interface for the TCPing utility, allo
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/JamesChan21/tcping.git
-   cd tcping
+   git clone https://github.com/JamesChan21/tcping-visual.git
+   cd tcping-visual
    ```
 
 2. Compile the TCPing utility:
@@ -102,7 +102,7 @@ This project is licensed under the GNU General Public License v2.0 - see the LIC
 
 ## 🇨🇳 中文
 
-TCPing 可视化工具是 TCPing 实用程序的现代 Web 界面，允许您通过美观、交互式的可视化界面测试到任何主机和端口的 TCP 连接。
+TCPing Visual 是 TCPing 实用程序的现代 Web 界面，允许您通过美观、交互式的可视化界面测试到任何主机和端口的 TCP 连接。
 
 ### ✨ 功能特点
 
@@ -125,8 +125,8 @@ TCPing 可视化工具是 TCPing 实用程序的现代 Web 界面，允许您通
 
 1. 克隆此仓库：
    ```bash
-   git clone https://github.com/JamesChan21/tcping.git
-   cd tcping
+   git clone https://github.com/JamesChan21/tcping-visual.git
+   cd tcping-visual
    ```
 
 2. 编译 TCPing 实用程序：

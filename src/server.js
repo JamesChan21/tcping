@@ -7,7 +7,12 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '.')));
+app.use(express.static(path.join(__dirname, '../public')));
+
+// For root path, serve the index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 // API endpoint to execute tcping
 app.post('/api/ping', (req, res) => {
@@ -29,7 +34,7 @@ app.post('/api/ping', (req, res) => {
     }
 
     // Build command with proper escaping to prevent command injection
-    let command = './tcping';
+    let command = path.join(__dirname, '../tcping');
 
     // Add port parameter
     command += ` -p ${parseInt(port)}`;

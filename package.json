@@ -1,10 +1,10 @@
 {
-  "name": "tcping-visualization",
+  "name": "tcping-visual",
   "version": "1.0.0",
-  "description": "A web-based visualization tool for TCPing",
-  "main": "server.js",
+  "description": "A beautiful web-based visualization tool for TCPing",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server.js"
   },
   "dependencies": {
     "express": "^4.17.1"

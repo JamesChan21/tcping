@@ -19,5 +19,5 @@ if [ ! -d "node_modules" ]; then
 fi
 
 # Start the server
-echo "Starting TCPing visualization server..."
-node server.js
+echo "Starting TCPing Visual server..."
+node src/server.js
