@@ -10,7 +10,7 @@
 
 [English](#english) | [中文](#chinese)
 
-<img src="https://user-images.githubusercontent.com/583231/89642856-d9dd0b00-d8d2-11ea-9857-1d2dbfc8c85d.png" alt="TCPing Visualization Screenshot" width="600"/>
+<img src="images/logo.jpeg" alt="TCPing Visual Screenshot" width="600"/>
 
 </div>
 
@@ -21,6 +21,8 @@
 ## 🇺🇸 English
 
 TCPing Visual is a modern web interface for the TCPing utility, allowing you to test TCP connectivity to any host and port with a beautiful, interactive visualization.
+
+![TCPing Visual Screenshot](images/screenshot-1744215242289.png)
 
 ### ✨ Features
 
@@ -144,6 +146,8 @@ This project is licensed under the GNU General Public License v2.0 - see the LIC
 ## 🇨🇳 中文
 
 TCPing Visual 是 TCPing 实用程序的现代 Web 界面，允许您通过美观、交互式的可视化界面测试到任何主机和端口的 TCP 连接。
+
+![TCPing Visual 截图](images/screenshot-1744215242289.png)
 
 ### ✨ 功能特点
 
